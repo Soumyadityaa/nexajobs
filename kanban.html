@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Application Tracker - NexaJobs</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to Main Content</a>
+
+  <header class="animate-up">
+    <h1>Application Tracker</h1>
+    <p>Manage your career progression by dragging and dropping your saved opportunities.</p>
+  </header>
+
+  <div class="nav-wrapper animate-up delay-1">
+    <nav>
+      <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()" tabindex="0" role="button" aria-label="Toggle navigation menu">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </div>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown">
+          <a href="#">Categories</a>
+          <ul class="dropdown-content">
+            <li><a href="index.html#jobs-section">Corporate Sector</a></li>
+            <li><a href="index.html#jobs-section">Public Sector</a></li>
+            <li><a href="index.html#jobs-section">Remote Work</a></li>
+          </ul>
+        </li>
+        <li><a href="kanban.html" class="active">Application Tracker</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+
+      <div class="theme-switch-wrapper">
+        <span class="theme-label" style="color: #fff; font-size: 0.85rem; margin-right: 8px;">Theme</span>
+        <label class="theme-switch" for="checkbox" title="Toggle Dark Mode">
+          <input type="checkbox" id="checkbox" />
+          <div class="slider round"></div>
+        </label>
+      </div>
+    </nav>
+  </div>
+
+  <div class="container" id="main-content" style="display: block;">
+    <div class="card animate-up delay-2" style="padding: 20px; margin-bottom: 30px; border-left: 4px solid var(--secondary); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+      <div style="flex: 1; min-width: 250px;">
+        <h3 style="color: var(--primary); margin-bottom: 10px;">Interactive Kanban Workflow</h3>
+        <p style="font-size: 0.95rem; color: var(--text-main);">
+          Drag and drop your job cards seamlessly across columns to update your application status. You can also manually add external jobs you've applied for.
+        </p>
+      </div>
+      <button class="btn-action" onclick="openCustomJobModal()">+ Add External Application</button>
+    </div>
+
+    <div class="kanban-board animate-up delay-3">
+      <div class="kanban-column" id="col-saved" ondragover="allowDrop(event)" ondrop="drop(event, 'saved')">
+        <div class="kanban-header">Saved Opportunities (<span id="count-saved">0</span>)</div>
+        <div class="kanban-cards" id="cards-saved"></div>
+      </div>
+
+      <div class="kanban-column" id="col-applied" ondragover="allowDrop(event)" ondrop="drop(event, 'applied')">
+        <div class="kanban-header" style="background: var(--secondary);">Application Submitted (<span id="count-applied">0</span>)</div>
+        <div class="kanban-cards" id="cards-applied"></div>
+      </div>
+
+      <div class="kanban-column" id="col-interviewing" ondragover="allowDrop(event)" ondrop="drop(event, 'interviewing')">
+        <div class="kanban-header" style="background: #e65100;">Interview Process (<span id="count-interviewing">0</span>)</div>
+        <div class="kanban-cards" id="cards-interviewing"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom External Job Modal -->
+  <div id="customJobModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content animate-up">
+      <h3 style="color: var(--primary); margin-bottom: 15px;">Add External Application</h3>
+      <form onsubmit="handleCustomJobSubmit(event)">
+        <div class="form-group">
+          <label>Company / Organization Name</label>
+          <input type="text" id="customOrg" placeholder="e.g. Google, Startup Inc." required>
+        </div>
+        <div class="form-group">
+          <label>Job Title / Role</label>
+          <input type="text" id="customTitle" placeholder="e.g. Senior Developer" required>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn-secondary" onclick="closeCustomJobModal()">Cancel</button>
+          <button type="submit" class="btn-action">Add Application</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <footer class="animate-up delay-3">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>NexaJobs Portal</h4>
+        <p>NexaJobs is a trusted job portal dedicated to helping candidates find corporate roles, public sector jobs, internships, and remote careers globally.</p>
+        <p style="margin-top: 10px;"><strong>Contact:</strong> contact@example.com</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Support</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Job Categories</h4>
+        <ul>
+          <li><a href="index.html#jobs-section">Public Sector</a></li>
+          <li><a href="index.html#jobs-section">Corporate Sector</a></li>
+          <li><a href="index.html#jobs-section">Remote Roles</a></li>
+          <li><a href="index.html#jobs-section">Internships</a></li>
+          <li><a href="index.html#jobs-section">Finance & Admin</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 NexaJobs Portal. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script/script.js"></script>
+</body>
+</html>

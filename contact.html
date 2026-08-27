@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us - NexaJobs</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to Main Content</a>
+
+  <!-- Header -->
+  <header class="animate-up">
+    <h1>Contact Support</h1>
+    <p>Reach out to our dedicated support and enterprise partnership teams.</p>
+  </header>
+
+  <!-- Navigation Bar -->
+  <div class="nav-wrapper animate-up delay-1">
+    <nav>
+      <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()" tabindex="0" role="button" aria-label="Toggle navigation menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        
+        <li class="dropdown">
+          <a href="#">Categories</a>
+          <ul class="dropdown-content">
+            <li><a href="index.html#jobs-section">Corporate Sector</a></li>
+            <li><a href="index.html#jobs-section">Public Sector</a></li>
+            <li><a href="index.html#jobs-section">Remote Work</a></li>
+          </ul>
+        </li>
+
+        <li><a href="kanban.html">Application Tracker</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html" class="active">Contact Us</a></li>
+      </ul>
+
+      <div class="theme-switch-wrapper">
+        <span class="theme-label" style="color: #fff; font-size: 0.85rem; margin-right: 8px;">Theme</span>
+        <label class="theme-switch" for="checkbox" title="Toggle Dark Mode">
+          <input type="checkbox" id="checkbox" />
+          <div class="slider round"></div>
+        </label>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Main Grid Layout -->
+  <div class="container" id="main-content">
+    <main>
+      <div class="about-section animate-up delay-2">
+        <div class="card-header">Get In Touch</div>
+        <div class="card-body">
+          <p style="margin-bottom: 25px;">
+            Welcome to the <strong>NexaJobs Contact Center</strong>. We are committed to providing exceptional support to our global community of candidates, recruiters, and corporate partners. 
+          </p>
+
+          <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 30px 0;" />
+
+          <h3 style="margin-bottom: 20px;">Send a Secure Message</h3>
+          
+          <!-- FIXED FORM: Inputs now correctly span 100% width cleanly -->
+          <form id="contactForm" onsubmit="handleContactSubmit(event)">
+            
+            <div class="form-group">
+              <label for="contactName">Full Name</label>
+              <input type="text" id="contactName" placeholder="John Doe" required />
+            </div>
+            
+            <div class="form-group">
+              <label for="contactEmail">Corporate Email Address</label>
+              <input type="email" id="contactEmail" placeholder="john.doe@company.com" required />
+            </div>
+            
+            <div class="form-group">
+              <label for="contactSubject">Subject / Inquiry Type</label>
+              <select id="contactSubject" required>
+                <option value="">Select an option...</option>
+                <option value="candidate">Candidate Support & Resume Help</option>
+                <option value="employer">Employer / Recruiter Services</option>
+                <option value="technical">Technical Issue / Bug Report</option>
+                <option value="partnership">Business Partnership</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="contactQuery">Message</label>
+              <textarea id="contactQuery" rows="5" placeholder="Please provide detailed information regarding your inquiry..." required></textarea>
+            </div>
+            
+            <button type="submit" class="btn-submit">Submit Inquiry</button>
+            <div id="formFeedback" class="form-feedback" style="display: none;">Your inquiry has been submitted successfully. A representative will contact you shortly.</div>
+          
+          </form>
+
+        </div>
+      </div>
+    </main>
+
+    <aside>
+      <div class="sidebar-widget animate-up delay-3">
+        <div class="widget-header">Direct Contact</div>
+        <div class="widget-body" style="padding: 15px;">
+          <p style="font-size: 0.9rem; margin-bottom: 10px;"><strong>Email:</strong><br> contact@example.com</p>
+          <p style="font-size: 0.9rem; margin-bottom: 10px;"><strong>Phone:</strong><br> +1 (800) 555-0199</p>
+          <p style="font-size: 0.9rem;"><strong>Hours:</strong><br> Mon-Fri, 9:00 AM - 6:00 PM (EST)</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <!-- Universal Footer -->
+  <footer class="animate-up delay-3">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>NexaJobs Portal</h4>
+        <p>NexaJobs is a trusted job portal dedicated to helping candidates find corporate roles, public sector jobs, internships, and remote careers globally.</p>
+        <p style="margin-top: 10px;"><strong>Contact:</strong> contact@example.com</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Support</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Job Categories</h4>
+        <ul>
+          <li><a href="index.html#jobs-section">Public Sector</a></li>
+          <li><a href="index.html#jobs-section">Corporate Sector</a></li>
+          <li><a href="index.html#jobs-section">Remote Roles</a></li>
+          <li><a href="index.html#jobs-section">Internships</a></li>
+          <li><a href="index.html#jobs-section">Finance & Admin</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 NexaJobs Portal. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script/script.js"></script>
+</body>
+</html>

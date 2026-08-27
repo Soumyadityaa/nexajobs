@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexaJobs - Professional Job Portal</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to Main Content</a>
+
+  <header class="animate-up">
+    <h1>NexaJobs Portal</h1>
+    <p>A Premium Job Board Template for Corporate, Public Sector, and Remote Opportunities</p>
+  </header>
+
+  <div class="nav-wrapper animate-up delay-1">
+    <nav>
+      <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()" tabindex="0" role="button" aria-label="Toggle navigation menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="#" id="savedJobsToggle" onclick="toggleSavedJobs(event)">Saved Jobs</a></li>
+        
+        <li class="dropdown">
+          <a href="#">Categories</a>
+          <ul class="dropdown-content">
+            <li><a href="#jobs-section">Corporate Sector</a></li>
+            <li><a href="#jobs-section">Public Sector</a></li>
+            <li><a href="#jobs-section">Remote Work</a></li>
+          </ul>
+        </li>
+
+        <li><a href="kanban.html">Application Tracker</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+
+      <div class="theme-switch-wrapper">
+        <span class="theme-label" style="color: #fff; font-size: 0.85rem; margin-right: 8px;">Theme</span>
+        <label class="theme-switch" for="checkbox" title="Toggle Dark Mode">
+          <input type="checkbox" id="checkbox" />
+          <div class="slider round"></div>
+        </label>
+      </div>
+    </nav>
+  </div>
+
+  <div class="hero-section reveal">
+    <h2>Discover Your Next Career Milestone</h2>
+    <p>Explore thousands of opportunities across top global enterprises, government sectors, and innovative startups.</p>
+  </div>
+
+  <div class="container" id="main-content">
+    <main>
+      <div class="filter-card reveal">
+        <div class="basic-filters" style="display: flex; gap: 12px; width: 100%; flex-wrap: wrap;">
+          
+          <div class="search-wrapper" style="flex: 1; min-width: 180px; position: relative; display: flex; align-items: center;">
+            <input 
+              type="text" 
+              id="searchInput" 
+              aria-label="Search Job Listings"
+              placeholder="Search by Post, Organization, or Keyword..." 
+              oninput="applyFilter()"
+              style="width: 100%; padding-right: 40px;" 
+            />
+            <button class="icon-btn" onclick="startVoiceSearch()" aria-label="Voice Search" style="position: absolute; right: 5px;" title="Search by Voice">
+              <svg viewBox="0 0 24 24" width="18" height="18" stroke="var(--text-muted)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+              </svg>
+            </button>
+          </div>
+
+          <select id="categorySelect" aria-label="Filter by Category" onchange="applyFilter()">
+            <option value="">All Industries</option>
+            <option value="Finance">Finance</option>
+            <option value="Tech">Technology</option>
+            <option value="Admin">Administration</option>
+            <option value="Logistics">Logistics</option>
+            <option value="Marketing">Marketing</option>
+          </select>
+          <button class="btn-secondary" onclick="toggleAdvancedFilters()" style="flex-grow: 0;">Advanced Filters</button>
+        </div>
+
+        <div id="advancedFilters" class="advanced-filters" style="display: none;">
+          <div class="filter-group">
+            <label for="salaryFilter">Minimum Salary: <span id="salaryValue">₹0 LPA</span></label>
+            <input type="range" id="salaryFilter" min="0" max="30" value="0" step="1" oninput="updateSalaryLabel(); applyFilter()" aria-label="Minimum Salary Filter">
+          </div>
+
+          <div class="filter-group">
+            <label><strong>Employment Type:</strong></label>
+            <label><input type="checkbox" class="type-filter" value="Full-Time" onchange="applyFilter()"> Full-Time</label>
+            <label><input type="checkbox" class="type-filter" value="Contract" onchange="applyFilter()"> Contract</label>
+            <label><input type="checkbox" class="type-filter" value="Internship" onchange="applyFilter()"> Internship</label>
+          </div>
+
+          <div class="filter-group">
+            <label><strong>Experience Level:</strong></label>
+            <label><input type="radio" name="expFilter" value="all" onchange="applyFilter()" checked> All</label>
+            <label><input type="radio" name="expFilter" value="Entry" onchange="applyFilter()"> Entry Level</label>
+            <label><input type="radio" name="expFilter" value="Mid" onchange="applyFilter()"> Mid/Senior</label>
+          </div>
+        </div>
+      </div>
+
+       <div class="card reveal" id="jobs-section">
+        <div class="card-header" id="tableHeader">Latest Active Job Notifications</div>
+        <div class="table-responsive">
+          <table id="recruitmentTable">
+            <thead>
+              <tr>
+                <th>Organization</th>
+                <th>Role & Details</th>
+                <th>AI Match Score</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            
+            <tbody id="skeleton-body" style="display: none;">
+              <tr>
+                <td data-label="Organization"><div class="skeleton skeleton-text"></div></td>
+                <td data-label="Role & Details"><div class="skeleton skeleton-text"></div></td>
+                <td data-label="AI Match Score"><div class="skeleton skeleton-text short"></div></td>
+                <td data-label="Actions"><div class="skeleton skeleton-btn"></div></td>
+              </tr>
+            </tbody>
+
+            <tbody id="job-table-body">
+              <!-- 30 Total Listings (10 Old + 20 New Random) -->
+              <tr data-id="job-1" data-category="Finance" data-salary="8" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>GlobalFinance Bank</strong> <span class="badge badge-urgent">Urgent</span></td>
+                <td data-label="Role & Details">Financial Analyst <br><small>Full-Time | ₹8 LPA | Degree in Finance</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-1', this)">Save</button><button class="btn-secondary" onclick="shareJob('Financial Analyst', 'https://nexajobs.com/job-1')">Share</button></td>
+              </tr>
+              <tr data-id="job-2" data-category="Logistics" data-salary="4" data-type="Contract" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>National Transit Auth</strong> <span class="badge badge-new">New</span></td>
+                <td data-label="Role & Details">Logistics Coordinator <br><small>Contract | ₹4 LPA | Diploma</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-2', this)">Save</button><button class="btn-secondary" onclick="shareJob('Logistics Coordinator', 'https://nexajobs.com/job-2')">Share</button></td>
+              </tr>
+              <tr data-id="job-3" data-category="Tech" data-salary="12" data-type="Full-Time" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>TechSynergy Solutions</strong></td>
+                <td data-label="Role & Details">Software Developer <br><small>Full-Time | ₹12 LPA | Computer Science</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-3', this)">Save</button><button class="btn-secondary" onclick="shareJob('Software Developer', 'https://nexajobs.com/job-3')">Share</button></td>
+              </tr>
+              <tr data-id="job-4" data-category="Admin" data-salary="5" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>Central Staffing</strong> <span class="badge badge-new">New</span></td>
+                <td data-label="Role & Details">Administrative Clerk <br><small>Full-Time | ₹5 LPA | Bachelor's Degree</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-4', this)">Save</button><button class="btn-secondary" onclick="shareJob('Admin Clerk', 'https://nexajobs.com/job-4')">Share</button></td>
+              </tr>
+              <tr data-id="job-5" data-category="Tech" data-salary="3" data-type="Internship" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>DevStudio Agency</strong></td>
+                <td data-label="Role & Details">Web Dev Intern <br><small>Internship | ₹3 LPA | React, HTML</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-5', this)">Save</button><button class="btn-secondary" onclick="shareJob('Web Dev Intern', 'https://nexajobs.com/job-5')">Share</button></td>
+              </tr>
+              <tr data-id="job-6" data-category="Marketing" data-salary="15" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>Global Reach Media</strong> <span class="badge badge-private">Corporate</span></td>
+                <td data-label="Role & Details">Marketing Manager <br><small>Full-Time | ₹15 LPA | 5+ Years Exp</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-6', this)">Save</button><button class="btn-secondary" onclick="shareJob('Marketing Manager', 'https://nexajobs.com/job-6')">Share</button></td>
+              </tr>
+              <tr data-id="job-7" data-category="Tech" data-salary="18" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>DataCore Systems</strong></td>
+                <td data-label="Role & Details">Data Scientist <br><small>Full-Time | ₹18 LPA | Python, Machine Learning</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-7', this)">Save</button><button class="btn-secondary" onclick="shareJob('Data Scientist', 'https://nexajobs.com/job-7')">Share</button></td>
+              </tr>
+              <tr data-id="job-8" data-category="Admin" data-salary="7" data-type="Contract" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>Enterprise HR Group</strong></td>
+                <td data-label="Role & Details">HR Specialist <br><small>Contract | ₹7 LPA | Talent Acquisition</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-8', this)">Save</button><button class="btn-secondary" onclick="shareJob('HR Specialist', 'https://nexajobs.com/job-8')">Share</button></td>
+              </tr>
+              <tr data-id="job-9" data-category="Logistics" data-salary="5" data-type="Full-Time" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>Prime Freight Co.</strong></td>
+                <td data-label="Role & Details">Operations Associate <br><small>Full-Time | ₹5 LPA | Supply Chain</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-9', this)">Save</button><button class="btn-secondary" onclick="shareJob('Operations Associate', 'https://nexajobs.com/job-9')">Share</button></td>
+              </tr>
+              <tr data-id="job-10" data-category="Finance" data-salary="10" data-type="Full-Time" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>Alpha Investments</strong> <span class="badge badge-urgent">Urgent</span></td>
+                <td data-label="Role & Details">Quantitative Analyst <br><small>Full-Time | ₹10 LPA | Statistics, SQL</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-10', this)">Save</button><button class="btn-secondary" onclick="shareJob('Quantitative Analyst', 'https://nexajobs.com/job-10')">Share</button></td>
+              </tr>
+              <tr data-id="job-11" data-category="Tech" data-salary="14" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>CloudScale Networks</strong></td>
+                <td data-label="Role & Details">DevOps Engineer <br><small>Full-Time | ₹14 LPA | AWS, Docker</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-11', this)">Save</button><button class="btn-secondary" onclick="shareJob('DevOps Engineer', 'https://nexajobs.com/job-11')">Share</button></td>
+              </tr>
+              <tr data-id="job-12" data-category="Marketing" data-salary="6" data-type="Internship" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>Vanguard Brands</strong></td>
+                <td data-label="Role & Details">SEO Content Writer <br><small>Internship | ₹6 LPA | Copywriting</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-12', this)">Save</button><button class="btn-secondary" onclick="shareJob('SEO Writer', 'https://nexajobs.com/job-12')">Share</button></td>
+              </tr>
+              <tr data-id="job-13" data-category="Finance" data-salary="9" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>Apex Capital</strong></td>
+                <td data-label="Role & Details">Tax Consultant <br><small>Full-Time | ₹9 LPA | CA / CPA</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-13', this)">Save</button><button class="btn-secondary" onclick="shareJob('Tax Consultant', 'https://nexajobs.com/job-13')">Share</button></td>
+              </tr>
+              <tr data-id="job-14" data-category="Admin" data-salary="4" data-type="Full-Time" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>Metro Health Trust</strong></td>
+                <td data-label="Role & Details">Medical Receptionist <br><small>Full-Time | ₹4 LPA | Secretarial Skills</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-14', this)">Save</button><button class="btn-secondary" onclick="shareJob('Medical Receptionist', 'https://nexajobs.com/job-14')">Share</button></td>
+              </tr>
+              <tr data-id="job-15" data-category="Tech" data-salary="20" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>CyberShield Labs</strong> <span class="badge badge-urgent">Urgent</span></td>
+                <td data-label="Role & Details">Security Analyst <br><small>Full-Time | ₹20 LPA | Ethical Hacking</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-15', this)">Save</button><button class="btn-secondary" onclick="shareJob('Security Analyst', 'https://nexajobs.com/job-15')">Share</button></td>
+              </tr>
+              <tr data-id="job-16" data-category="Logistics" data-salary="7" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>Swift Cargo Express</strong></td>
+                <td data-label="Role & Details">Fleet Supervisor <br><small>Full-Time | ₹7 LPA | Supply Chain Mgmt</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-16', this)">Save</button><button class="btn-secondary" onclick="shareJob('Fleet Supervisor', 'https://nexajobs.com/job-16')">Share</button></td>
+              </tr>
+              <tr data-id="job-17" data-category="Marketing" data-salary="11" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>BrandPulse Agency</strong></td>
+                <td data-label="Role & Details">UI/UX Designer <br><small>Full-Time | ₹11 LPA | Figma, User Research</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-17', this)">Save</button><button class="btn-secondary" onclick="shareJob('UI/UX Designer', 'https://nexajobs.com/job-17')">Share</button></td>
+              </tr>
+              <tr data-id="job-18" data-category="Tech" data-salary="9" data-type="Contract" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>PixelCraft Studio</strong></td>
+                <td data-label="Role & Details">Frontend Developer <br><small>Contract | ₹9 LPA | HTML, CSS, JavaScript</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-18', this)">Save</button><button class="btn-secondary" onclick="shareJob('Frontend Developer', 'https://nexajobs.com/job-18')">Share</button></td>
+              </tr>
+              <tr data-id="job-19" data-category="Finance" data-salary="6" data-type="Full-Time" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>Sterling Credit</strong></td>
+                <td data-label="Role & Details">Loan Officer <br><small>Full-Time | ₹6 LPA | Banking Operations</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-19', this)">Save</button><button class="btn-secondary" onclick="shareJob('Loan Officer', 'https://nexajobs.com/job-19')">Share</button></td>
+              </tr>
+              <tr data-id="job-20" data-category="Admin" data-salary="4.5" data-type="Internship" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>Apex Legal Partners</strong></td>
+                <td data-label="Role & Details">Legal Intern <br><small>Internship | ₹4.5 LPA | Research & Drafting</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-20', this)">Save</button><button class="btn-secondary" onclick="shareJob('Legal Intern', 'https://nexajobs.com/job-20')">Share</button></td>
+              </tr>
+              <tr data-id="job-21" data-category="Tech" data-salary="16" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>CloudNative Inc.</strong></td>
+                <td data-label="Role & Details">Cloud Architect <br><small>Full-Time | ₹16 LPA | Azure, Kubernetes</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-21', this)">Save</button><button class="btn-secondary" onclick="shareJob('Cloud Architect', 'https://nexajobs.com/job-21')">Share</button></td>
+              </tr>
+              <tr data-id="job-22" data-category="Marketing" data-salary="8" data-type="Full-Time" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>OmniChannel Retail</strong></td>
+                <td data-label="Role & Details">Social Media Strategist <br><small>Full-Time | ₹8 LPA | Campaign Management</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-22', this)">Save</button><button class="btn-secondary" onclick="shareJob('Social Media Strategist', 'https://nexajobs.com/job-22')">Share</button></td>
+              </tr>
+              <tr data-id="job-23" data-category="Finance" data-salary="13" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>VentureHorizon Capital</strong></td>
+                <td data-label="Role & Details">Investment Associate <br><small>Full-Time | ₹13 LPA | Portfolio Management</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-23', this)">Save</button><button class="btn-secondary" onclick="shareJob('Investment Associate', 'https://nexajobs.com/job-23')">Share</button></td>
+              </tr>
+              <tr data-id="job-24" data-category="Logistics" data-salary="6.5" data-type="Full-Time" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>Global Port Logistics</strong></td>
+                <td data-label="Role & Details">Warehouse Planner <br><small>Full-Time | ₹6.5 LPA | Inventory Control</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-24', this)">Save</button><button class="btn-secondary" onclick="shareJob('Warehouse Planner', 'https://nexajobs.com/job-24')">Share</button></td>
+              </tr>
+              <tr data-id="job-25" data-category="Tech" data-salary="11" data-type="Full-Time" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>InnoTech Systems</strong></td>
+                <td data-label="Role & Details">QA Automation Engineer <br><small>Full-Time | ₹11 LPA | Selenium, Java</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-25', this)">Save</button><button class="btn-secondary" onclick="shareJob('QA Engineer', 'https://nexajobs.com/job-25')">Share</button></td>
+              </tr>
+              <tr data-id="job-26" data-category="Admin" data-salary="5.5" data-type="Full-Time" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>Civic Municipal Board</strong></td>
+                <td data-label="Role & Details">Public Relations Officer <br><small>Full-Time | ₹5.5 LPA | Communication</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-26', this)">Save</button><button class="btn-secondary" onclick="shareJob('PR Officer', 'https://nexajobs.com/job-26')">Share</button></td>
+              </tr>
+              <tr data-id="job-27" data-category="Marketing" data-salary="9.5" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>NextGen Ads</strong></td>
+                <td data-label="Role & Details">PPC Campaign Specialist <br><small>Full-Time | ₹9.5 LPA | Google Ads, Analytics</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-27', this)">Save</button><button class="btn-secondary" onclick="shareJob('PPC Specialist', 'https://nexajobs.com/job-27')">Share</button></td>
+              </tr>
+              <tr data-id="job-28" data-category="Tech" data-salary="22" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>Quantum AI Labs</strong> <span class="badge badge-urgent">Urgent</span></td>
+                <td data-label="Role & Details">Machine Learning Engineer <br><small>Full-Time | ₹22 LPA | TensorFlow, PyTorch</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-28', this)">Save</button><button class="btn-secondary" onclick="shareJob('ML Engineer', 'https://nexajobs.com/job-28')">Share</button></td>
+              </tr>
+              <tr data-id="job-29" data-category="Finance" data-salary="7.5" data-type="Contract" data-exp="Entry" class="reveal-row">
+                <td data-label="Organization"><strong>Pioneer Auditing</strong></td>
+                <td data-label="Role & Details">Junior Auditor <br><small>Contract | ₹7.5 LPA | Internal Compliance</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-29', this)">Save</button><button class="btn-secondary" onclick="shareJob('Junior Auditor', 'https://nexajobs.com/job-29')">Share</button></td>
+              </tr>
+              <tr data-id="job-30" data-category="Logistics" data-salary="8.5" data-type="Full-Time" data-exp="Mid" class="reveal-row">
+                <td data-label="Organization"><strong>TransContinental Freight</strong></td>
+                <td data-label="Role & Details">Supply Chain Analyst <br><small>Full-Time | ₹8.5 LPA | Data Modeling</small></td>
+                <td data-label="AI Match Score" class="ai-cell"><div class="ai-match-label">Awaiting Input</div><div class="ai-match-bar"><div class="ai-match-fill"></div></div></td>
+                <td data-label="Actions" class="action-cell"><a href="#" class="btn-action">Apply</a><button class="btn-secondary btn-save" onclick="toggleSave('job-30', this)">Save</button><button class="btn-secondary" onclick="shareJob('Supply Chain Analyst', 'https://nexajobs.com/job-30')">Share</button></td>
+              </tr>
+
+              <tr id="noResultsRow" style="display: none;">
+                <td colspan="4" style="text-align: center; padding: 20px; color: var(--text-muted);">
+                  No job notifications match your search criteria.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Container matching the requested design -->
+        <div id="paginationContainer" class="pagination-container"></div>
+      </div>
+
+
+      <div class="card reveal" id="subscribe-section">
+        <div class="card-header">Subscribe to NexaJobs Alerts</div>
+        <div class="card-body">
+          <p style="margin-bottom: 15px; font-size: 0.95rem; color: var(--text-main);">
+            Stay updated with the latest corporate and public sector roles. Receive curated listings directly in your inbox.
+          </p>
+          <form id="subscribeForm" onsubmit="handleSubscribeSubmit(event)" style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <input 
+              type="email" 
+              id="subscribeEmail" 
+              placeholder="Enter your professional email address" 
+              required 
+              style="flex: 1; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 0.9rem; outline: none; min-width: 200px;" 
+            />
+            <button type="submit" class="btn-action">Subscribe Now</button>
+          </form>
+          <div id="subscribeFeedback" class="form-feedback" style="display: none;">Subscription Successful. Welcome to NexaJobs!</div>
+        </div>
+      </div>
+
+</main>
+
+    <aside>
+      <div class="sidebar-widget reveal">
+        <div class="widget-header">Smart Resume Matcher</div>
+        <div class="widget-body" style="padding: 15px;">
+          <p style="font-size: 0.85rem; margin-bottom: 10px;">Paste your core skills to evaluate your match score across all listings.</p>
+          <textarea id="aiResumeInput" rows="3" placeholder="e.g., Python, Finance, Marketing, Leadership" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid var(--border-color); background: var(--surface); color: var(--text-main); font-size: 0.85rem;"></textarea>
+          <button class="btn-action" style="width: 100%; margin-top: 10px;" onclick="calculateAIMatch()">Analyze Profiles</button>
+        </div>
+      </div>
+
+      <div class="sidebar-widget reveal delay-2">
+        <div class="widget-header">Salary Estimator</div>
+        <div class="widget-body" style="padding: 15px;">
+          <p style="font-size: 0.85rem; margin-bottom: 15px; color: var(--text-main);">Get a market estimate based on your role and experience.</p>
+          
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label for="calcRole" style="font-size: 0.85rem;">Job Role</label>
+            <select id="calcRole" style="padding: 8px; font-size: 0.85rem;">
+              <option value="developer">Software Developer</option>
+              <option value="analyst">Data Analyst</option>
+              <option value="admin">Administration / HR</option>
+              <option value="finance">Finance Executive</option>
+              <option value="marketing">Marketing Specialist</option>
+            </select>
+          </div>
+          
+          <div class="form-group" style="margin-bottom: 15px;">
+            <label for="calcExp" style="font-size: 0.85rem;">Years of Experience: <span id="expValDisplay" style="color: var(--secondary); font-weight: bold;">0</span></label>
+            <input type="range" id="calcExp" min="0" max="20" value="0" step="1" oninput="document.getElementById('expValDisplay').textContent = this.value" style="width: 100%; margin-top: 5px;">
+          </div>
+          
+          <button class="btn-action" style="width: 100%; text-align: center; padding: 8px;" onclick="calculateSalary()">Estimate Salary</button>
+          
+          <div id="salaryResultContainer" style="margin-top: 15px; text-align: center; display: none; padding-top: 10px; border-top: 1px dashed var(--border-color);">
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Estimated Market Value</p>
+            <h3 id="salaryResult" style="color: var(--secondary); font-size: 1.5rem; margin-top: 5px;">₹0</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-widget reveal">
+        <div class="widget-header">Top Industries</div>
+        <ul class="widget-list">
+          <li><a href="#" style="display: flex; justify-content: space-between;"><span>Technology</span> <span style="color: var(--text-muted); font-size: 0.8rem;">245 Jobs</span></a></li>
+          <li><a href="#" style="display: flex; justify-content: space-between;"><span>Finance & Banking</span> <span style="color: var(--text-muted); font-size: 0.8rem;">180 Jobs</span></a></li>
+          <li><a href="#" style="display: flex; justify-content: space-between;"><span>Logistics & Supply</span> <span style="color: var(--text-muted); font-size: 0.8rem;">95 Jobs</span></a></li>
+          <li><a href="#" style="display: flex; justify-content: space-between;"><span>Marketing & PR</span> <span style="color: var(--text-muted); font-size: 0.8rem;">72 Jobs</span></a></li>
+          <li><a href="#" style="display: flex; justify-content: space-between;"><span>Administration</span> <span style="color: var(--text-muted); font-size: 0.8rem;">56 Jobs</span></a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-widget reveal">
+        <div class="widget-header">Candidate Resources</div>
+        <ul class="widget-list">
+          <li><a href="kanban.html">Track Applications</a></li>
+          <li><a href="#">Resume Formatting Guidelines</a></li>
+          <li><a href="#">Interview Preparation</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <!-- FIXED INDEX HTML FOOTER: Three columns perfectly aligned like your screenshot -->
+  <footer class="animate-up delay-3">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>NexaJobs Portal</h4>
+        <p>NexaJobs is a trusted job portal dedicated to helping candidates find corporate roles, public sector jobs, internships, and remote careers globally.</p>
+        <p style="margin-top: 10px;"><strong>Contact:</strong> contact@example.com</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Support</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Job Categories</h4>
+        <ul>
+          <li><a href="index.html#jobs-section">Public Sector</a></li>
+          <li><a href="index.html#jobs-section">Corporate Sector</a></li>
+          <li><a href="index.html#jobs-section">Remote Roles</a></li>
+          <li><a href="index.html#jobs-section">Internships</a></li>
+          <li><a href="index.html#jobs-section">Finance & Admin</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 NexaJobs Portal. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script/script.js"></script>
+</body>
+</html>

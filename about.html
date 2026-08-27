@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us - NexaJobs</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to Main Content</a>
+
+  <!-- Header -->
+  <header class="animate-up">
+    <h1>About NexaJobs</h1>
+    <p>Empowering professionals and enterprises to build the future of work.</p>
+  </header>
+
+  <!-- Navigation Bar -->
+  <div class="nav-wrapper animate-up delay-1">
+    <nav>
+      <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()" tabindex="0" role="button" aria-label="Toggle navigation menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        
+        <li class="dropdown">
+          <a href="#">Categories</a>
+          <ul class="dropdown-content">
+            <li><a href="index.html#jobs-section">Corporate Sector</a></li>
+            <li><a href="index.html#jobs-section">Public Sector</a></li>
+            <li><a href="index.html#jobs-section">Remote Work</a></li>
+          </ul>
+        </li>
+
+        <li><a href="kanban.html">Application Tracker</a></li>
+        <li><a href="about.html" class="active">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+
+      <div class="theme-switch-wrapper">
+        <span class="theme-label" style="color: #fff; font-size: 0.85rem; margin-right: 8px;">Theme</span>
+        <label class="theme-switch" for="checkbox" title="Toggle Dark Mode">
+          <input type="checkbox" id="checkbox" />
+          <div class="slider round"></div>
+        </label>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Main Grid Layout -->
+  <div class="container" id="main-content">
+    <main>
+      <div class="about-section animate-up delay-2">
+        <div class="card-header">Our Corporate Identity</div>
+        <div class="card-body">
+          <p>
+            Welcome to <strong>NexaJobs</strong>, a premier global platform dedicated to bridging the gap between top-tier talent and industry-leading enterprises. Established with the vision of streamlining the recruitment process, we provide an intuitive, high-performance ecosystem for both job seekers and corporate partners.
+          </p>
+          <p>
+            Whether you are navigating the corporate landscape, seeking public sector stability, or transitioning into remote workflows, NexaJobs leverages modern technology to deliver a frictionless experience.
+          </p>
+
+          <div class="grid-2col">
+            <div class="info-box" style="padding: 15px;">
+              <h4>Our Mission</h4>
+              <p>To democratize access to career opportunities by providing a transparent, data-driven, and highly accessible job marketplace. We empower candidates to make informed career decisions while enabling organizations to scale their workforce efficiently.</p>
+            </div>
+            <div class="info-box" style="padding: 15px;">
+              <h4>Our Vision</h4>
+              <p>To become the definitive standard in digital recruitment, fostering an environment where human potential aligns perfectly with organizational goals across every major industry sector.</p>
+            </div>
+          </div>
+
+          <h3 style="margin-top: 30px;">Core Values</h3>
+          <div class="feature-grid">
+            <div class="feature-item">
+              <h5>Integrity & Transparency</h5>
+              <p>We ensure all job listings are verified, ensuring candidates have access to authentic and accurate employment data.</p>
+            </div>
+            <div class="feature-item">
+              <h5>Innovation</h5>
+              <p>By integrating AI resume matching and responsive design, we continuously push the boundaries of digital recruitment.</p>
+            </div>
+            <div class="feature-item">
+              <h5>Inclusivity</h5>
+              <p>We are committed to providing equal opportunities, highlighting roles that embrace diverse and remote workforces.</p>
+            </div>
+          </div>
+
+          <h3 style="margin-top: 30px;">Our Leadership</h3>
+          <p>
+            NexaJobs is driven by a multidisciplinary team of software engineers, data scientists, and human resource specialists who are passionate about the future of work. Our leadership continually collaborates with global enterprises to ensure our platform adapts to the ever-evolving demands of the labor market.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <aside>
+      <div class="sidebar-widget animate-up delay-3">
+        <div class="widget-header">Platform Statistics</div>
+        <ul class="widget-list">
+          <li style="padding: 12px 16px;"><strong>Active Listings:</strong> 12,450+</li>
+          <li style="padding: 12px 16px;"><strong>Corporate Partners:</strong> 850+</li>
+          <li style="padding: 12px 16px;"><strong>Successful Placements:</strong> 45,000+</li>
+          <li style="padding: 12px 16px;"><strong>Global Reach:</strong> 15+ Countries</li>
+        </ul>
+      </div>
+
+      <div class="sidebar-widget animate-up delay-3">
+        <div class="widget-header">Join Our Network</div>
+        <div class="widget-body" style="padding: 15px;">
+          <p style="font-size: 0.9rem; margin-bottom: 10px;">Are you an employer looking to scale your team with exceptional talent?</p>
+          <a href="contact.html" class="btn-action" style="display: block; text-align: center;">Partner With Us</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <!-- Universal Footer -->
+  <footer class="animate-up delay-3">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>NexaJobs Portal</h4>
+        <p>NexaJobs is a highly advanced template demonstrating a modern job portal interface with local storage databases, native sharing, and advanced frontend filtering capabilities.</p>
+        <p style="margin-top: 10px;"><strong>Contact:</strong> contact@example.com</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Support</a></li>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Candidate Tools</h4>
+        <ul>
+          <li><a href="kanban.html">Application Tracker</a></li>
+          <li><a href="index.html#jobs-section">Search Openings</a></li>
+          <li><a href="index.html">AI Resume Matcher</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 NexaJobs Portal. All rights reserved. Professional Portfolio Template.</p>
+    </div>
+  </footer>
+
+  <script src="script/script.js"></script>
+</body>
+</html>

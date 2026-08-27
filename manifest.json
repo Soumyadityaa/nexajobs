@@ -1,0 +1,16 @@
+{
+  "name": "NexaJobs Portal",
+  "short_name": "NexaJobs",
+  "description": "Advanced Job Board Template",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#eaeff2",
+  "theme_color": "#16a05d",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3061/3061341.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
